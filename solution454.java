@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class solution454 {
     public static void main(String[] args) {
@@ -13,32 +14,22 @@ public class solution454 {
     }
 
     public static int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        HashMap<Integer, Integer> abMap = new HashMap<Integer, Integer>();
+
+        int n = nums1.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                abMap.put(nums1[i] + nums2[j], abMap.getOrDefault(nums1[i] + nums2[j], 0) + 1);
+            }
+        }
         int count = 0;
-        HashSet<Integer> resultmap = new HashSet<Integer>();
-
-        for (int i = 0; i < nums1.length; i++) {
-            for (int j = 0; j < nums2.length; j++) {
-                for (int k = 0; k < nums3.length; k++) {
-                    resultmap.add(nums1[i] + nums2[j] + nums3[k]);
-
+        for (int k : nums3) {
+            for (int q : nums4) {
+                if (abMap.containsKey(-k - q)) {
+                    count = count + abMap.get(-k - q);
                 }
             }
         }
-        for (int q = 0; q < nums4.length; q++) {
-
-          if (resultmap.contains(-nums4[q])) {
-            count++;
-          }
-            // if (resultmap.contains(-nums4[q])) {
-            // System.out.print(nums1[i]);
-            // System.out.print(nums2[j]);
-            // System.out.print(nums3[k]);
-            // System.out.print(nums4[q]);
-            // System.out.println("----------");
-            // count++;
-            // }
-        }
-
         return count;
     }
 
